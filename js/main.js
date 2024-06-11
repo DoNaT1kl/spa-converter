@@ -1,13 +1,70 @@
-function convertCurrency() {
-    // Получаем значение из текстового поля
-    const input = document.getElementById('currencyInput').value;
-    
-    // Здесь вы можете использовать API для получения актуальных курсов валют и выполнения конвертации
-    // Например, можно использовать бесплатный API от OANDA
-    
-    // Пример обработки запроса и вывода результата
-    const result = "result: ..."; // Здесь будет ваш результат
-    
-    // Выводим результат на страницу
-    document.getElementById('result').innerText = result;
+const rates = {};
+const elementUSD = document.querySelector('[data-value="USD"]');
+const elementEUR = document.querySelector('[data-value="EUR"]');
+const elementBYN = document.querySelector('[data-value="BYN"]');
+const elementUAH = document.querySelector('[data-value="UAH"]');
+const elementKZT = document.querySelector('[data-value="KZT"]');
+const elementJPY = document.querySelector('[data-value="JPY"]');
+
+const getCurrencies = async () => {
+  const responce = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+  const data = await responce.json();
+  const result = await data;
+
+  console.log(result);
+
+  rates.USD = result.Valute.USD;
+  rates.EUR = result.Valute.EUR;
+  rates.BYN = result.Valute.BYN;
+  rates.UAH = result.Valute.UAH;
+  rates.KZT = result.Valute.KZT;
+  rates.JPY = result.Valute.JPY;
+
+  elementUSD.textContent = rates.USD.Value.toFixed(2);
+  elementEUR.textContent = rates.EUR.Value.toFixed(2);
+  elementBYN.textContent = rates.BYN.Value.toFixed(2);
+  elementUAH.textContent = rates.UAH.Value.toFixed(2);
+  elementKZT.textContent = rates.KZT.Value.toFixed(2);
+  elementJPY.textContent = rates.JPY.Value.toFixed(2);
+};
+
+getCurrencies();
+
+document.getElementById("currencyInput").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    convertCurrency();
   }
+});
+
+const convertCurrency = () => {
+
+  const input = document.getElementById('currencyInput').value;
+  const valueInput = input.replace(/[^a-zA-Z]/g, '');
+  const onlyDigit = input.replace(/\D/g, '');
+
+  switch (valueInput) {
+    case 'USD':
+      result = (onlyDigit * rates.USD.Value).toFixed(2);
+      break;
+    case 'EUR':
+      result = (onlyDigit * rates.EUR.Value).toFixed(2);
+      break;
+    case 'BYN':
+      result = (onlyDigit * rates.BYN.Value).toFixed(2);
+      break;
+    case 'UAH':
+      result = ((onlyDigit * rates.UAH.Value) / 10).toFixed(2);
+      break;
+    case 'KZT':
+      result = ((onlyDigit * rates.KZT.Value) / 100).toFixed(2);
+      break;
+    case 'JPY':
+      result = ((onlyDigit * rates.JPY.Value) / 10).toFixed(2);
+      break;
+    default:
+      result = 'Неправильный буквенный код';
+  }
+    
+  document.getElementById('result').innerText = result;
+};
