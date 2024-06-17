@@ -43,24 +43,24 @@ const convertCurrency = () => {
   const valueInput = input.replace(/[^a-zA-Z]/g, '');
   const onlyDigit = input.replace(/\D/g, '');
 
-  switch (valueInput) {
+  switch (valueInput.toUpperCase()) {
     case 'USD':
-      result = (onlyDigit * rates.USD.Value).toFixed(2);
+      result = `${(onlyDigit * rates.USD.Value).toFixed(2)} рублей`;
       break;
     case 'EUR':
-      result = (onlyDigit * rates.EUR.Value).toFixed(2);
+      result = `${(onlyDigit * rates.EUR.Value).toFixed(2)} рублей`;
       break;
     case 'BYN':
-      result = (onlyDigit * rates.BYN.Value).toFixed(2);
+      result = `${(onlyDigit * rates.BYN.Value).toFixed(2)} рублей`;
       break;
     case 'UAH':
-      result = ((onlyDigit * rates.UAH.Value) / 10).toFixed(2);
+      result = `${((onlyDigit * rates.UAH.Value) / 10).toFixed(2)} рублей`;
       break;
     case 'KZT':
-      result = ((onlyDigit * rates.KZT.Value) / 100).toFixed(2);
+      result = `${((onlyDigit * rates.KZT.Value) / 100).toFixed(2)} рублей`;
       break;
     case 'JPY':
-      result = ((onlyDigit * rates.JPY.Value) / 10).toFixed(2);
+      result = `${((onlyDigit * rates.JPY.Value) / 10).toFixed(2)} рублей`;
       break;
     default:
       result = 'Неправильный буквенный код';

@@ -9,12 +9,14 @@ html {
 }
 
 .container {
+  max-width: 1000px;
+  max-height: 800px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60vh;
-  height: 80vh;
+  width: 99%;
+  height: 90%;
   border: 1px solid black;
   border-radius: 10px;
   background-color: aliceblue;
@@ -30,7 +32,7 @@ html {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid black;
-  height: 600px;
+  height: 50%;
 }
 
 thead {
